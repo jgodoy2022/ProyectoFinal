@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Comidas;
 
 public abstract class Comida {
     private int num;

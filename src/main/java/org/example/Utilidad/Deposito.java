@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Utilidad;
 import java.util.ArrayList;
 
 public class Deposito<T> {

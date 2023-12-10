@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Exceptions;
 
 public class ComidaErroneaException extends Exception{
     public ComidaErroneaException(String message) {
