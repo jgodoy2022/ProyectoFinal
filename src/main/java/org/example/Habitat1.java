@@ -91,25 +91,67 @@ public class Habitat1 {
         else if (this.contleon == 5 || this.contserpiente==5 || this.contpeces==5 || this.contcapibara==5 || this.contbuho==5 || this.contcanguro==5) {
             throw new AreaSaturadaException("Error. Área Saturada");
         }
-        else if (n == TipoAnimal.LEON.getOpcion() && (leon.sizeCosas() > 0)) {
+        else if (n == TipoAnimal.LEON.getOpcion() && (leon.sizeCosas()-1 > 0)) {
             this.contleon += 1;
             return leon.getCosas();
-        } else if (n == TipoAnimal.BUHO.getOpcion() && (buho.sizeCosas() > 0)) {
+        } else if (n == TipoAnimal.BUHO.getOpcion() && (buho.sizeCosas()-1 > 0)) {
             this.contbuho += 1;
             return buho.getCosas();
-        } else if (n == TipoAnimal.PECES.getOpcion() && (peces.sizeCosas() > 0)) {
+        } else if (n == TipoAnimal.PECES.getOpcion() && (peces.sizeCosas()-1 > 0)) {
             this.contpeces += 1;
             return peces.getCosas();
-        } else if (n == TipoAnimal.CANGURO.getOpcion() && (canguro.sizeCosas() > 0)) {
+        } else if (n == TipoAnimal.CANGURO.getOpcion() && (canguro.sizeCosas()-1 > 0)) {
             this.contcanguro += 1;
             return canguro.getCosas();
-        } else if (n == TipoAnimal.CAPIBARA.getOpcion() && (capibara.sizeCosas() > 0)) {
+        } else if (n == TipoAnimal.CAPIBARA.getOpcion() && (capibara.sizeCosas()-1 > 0)) {
             this.contcapibara += 1;
             return capibara.getCosas();
-        } else if (n == TipoAnimal.SERPIENTE.getOpcion() && (serpiente.sizeCosas() > 0)) {
+        } else if (n == TipoAnimal.SERPIENTE.getOpcion() && (serpiente.sizeCosas()-1 > 0)) {
             this.contserpiente += 1;
             return serpiente.getCosas();
         }
         return null;
+    }
+
+    /**
+     * @return reinicia el contador de buhos a cero
+     */
+    public int cerobuho(){
+        return contbuho=0;
+    }
+
+    /**
+     * @return reinicia el contador de canguros a cero
+     */
+    public int cerocanguro(){
+        return contcanguro=0;
+    }
+
+    /**
+     * @return reinicia el contador de capibaras a cero
+     */
+    public int cerocapibara(){
+        return contcapibara=0;
+    }
+
+    /**
+     * @return reinicia el contador de leon a cero
+     */
+    public int ceroleon(){
+        return contleon=0;
+    }
+
+    /**
+     * @return reinicia el contador de peces a cero
+     */
+    public int ceropeces(){
+        return contpeces=0;
+    }
+
+    /**
+     * @return reinicia el contador de serpientes a cero
+     */
+    public int ceroserpiente(){
+        return contserpiente=0;
     }
 }

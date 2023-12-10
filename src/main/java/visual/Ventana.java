@@ -5,9 +5,19 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * El Jframe ventana representa la ventana de la interfaz grafica, se utiliza para poder mostrar la interfaz grafica del codigo
+ * @author Gabriela Isidora Zambrano Novoa
+ * @author Joaquin Alejandro Godoy Vergara
+ */
 public class Ventana extends JFrame {
+
+    /** Referencia de al panel principal el cual contiene a el resto de paneles*/
     private PanelPrincipal panelPrincipal;
 
+    /**
+     * Constructor inicializa la ventana y configura sus propiedades
+     */
     public Ventana() {
         panelPrincipal = new PanelPrincipal();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,6 +38,7 @@ public class Ventana extends JFrame {
 
         JMenuItem volverItem = new JMenuItem("Volver a todos los Habitats");
 
+        // Acciones para los elementos del menú
         sabanaItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -77,7 +88,7 @@ public class Ventana extends JFrame {
                 panelPrincipal.mostrarVistaTodosHabitats();
             }
         });
-
+        // Agregar elementos al menú
         habitatsMenu.add(sabanaItem);
         habitatsMenu.add(acuarioItem);
         habitatsMenu.add(selvaItem);
@@ -99,11 +110,5 @@ public class Ventana extends JFrame {
 
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new Ventana();
-        });
     }
 }
