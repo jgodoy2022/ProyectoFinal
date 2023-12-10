@@ -1,5 +1,7 @@
 package visual;
 
+import org.example.AreaSaturadaException;
+import org.example.Habitat1;
 import org.example.HabitatIncorrectoException;
 
 import javax.swing.*;
@@ -13,8 +15,10 @@ public class PanelSelva extends JPanel {
     private ImageIcon leon,buho,canguro,capibara,peces,serpiente;
     private ImageIcon fondo;
     private List<Point> posicionesOcupadas = new ArrayList<>();
+    private Habitat1 habitat;
 
-    public PanelSelva() {
+    public PanelSelva(Habitat1 habitat) {
+        this.habitat=habitat;
         fondo = new ImageIcon("src/main/java/visual/Imagenes/panelselva.jpg");
         this.setPreferredSize(new Dimension(700, 500));
 
@@ -60,7 +64,7 @@ public class PanelSelva extends JPanel {
         agregarCapibaraButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                agregarImagenAleatoria(capibara);
+                    agregarImagenAleatoria(capibara);
             }
         });
 
@@ -76,7 +80,17 @@ public class PanelSelva extends JPanel {
         agregarSerpienteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                agregarImagenAleatoria(serpiente);
+                if (habitat != null) {
+                    agregarImagenAleatoria(serpiente);
+                    try {
+                        habitat.mostrarAnimal(1);
+                    } catch (AreaSaturadaException ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage());
+                        deshabilitarBotonesAgregar();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "No puede ingresar más animales");
+                }
             }
         });
 
@@ -129,6 +143,13 @@ public class PanelSelva extends JPanel {
         // Dibuja las imágenes según las posiciones ocupadas
         for (Point posicion : posicionesOcupadas) {
             g.drawImage(serpiente.getImage(), posicion.x, posicion.y, this);
+        }
+    }
+    private void deshabilitarBotonesAgregar() {
+        for (Component component : this.getComponents()) {
+            if (component instanceof JButton) {
+                component.setEnabled(false);
+            }
         }
     }
 }

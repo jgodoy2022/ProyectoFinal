@@ -34,14 +34,24 @@ public class Habitat1 {
     private Deposito<Animal> serpiente;
 
     /**Entero que representa la capacidad maxima del habitat*/
-    private int cont;
+    private int contleon;
+    private int contbuho;
+    private int contcanguro;
+    private int contcapibara;
+    private int contpeces;
+    private int contserpiente;
 
     /**
      * Constructor de la clase Habitat1.
      * @param num Cantidad total de animales.
      */
     public Habitat1(int num) {
-        cont = 0;
+        contbuho = 0;
+        contcanguro = 0;
+        contcapibara = 0;
+        contpeces = 0;
+        contleon = 0;
+        contserpiente=0;
         leon = new Deposito<>();
         buho = new Deposito<>();
         peces = new Deposito<>();
@@ -78,26 +88,26 @@ public class Habitat1 {
         if(n!=TipoAnimal.LEON.getOpcion() && n != TipoAnimal.SERPIENTE.getOpcion() && n != TipoAnimal.CAPIBARA.getOpcion() && n!=TipoAnimal.BUHO.getOpcion() && n != TipoAnimal.PECES.getOpcion() && n != TipoAnimal.CANGURO.getOpcion()){
             return null;
         }
-        else if (this.cont == 5) {
+        else if (this.contleon == 5 || this.contserpiente==5 || this.contpeces==5 || this.contcapibara==5 || this.contbuho==5 || this.contcanguro==5) {
             throw new AreaSaturadaException("Error. Área Saturada");
         }
         else if (n == TipoAnimal.LEON.getOpcion() && (leon.sizeCosas() > 0)) {
-            this.cont += 1;
+            this.contleon += 1;
             return leon.getCosas();
         } else if (n == TipoAnimal.BUHO.getOpcion() && (buho.sizeCosas() > 0)) {
-            this.cont += 1;
+            this.contbuho += 1;
             return buho.getCosas();
         } else if (n == TipoAnimal.PECES.getOpcion() && (peces.sizeCosas() > 0)) {
-            this.cont += 1;
+            this.contpeces += 1;
             return peces.getCosas();
         } else if (n == TipoAnimal.CANGURO.getOpcion() && (canguro.sizeCosas() > 0)) {
-            this.cont += 1;
+            this.contcanguro += 1;
             return canguro.getCosas();
         } else if (n == TipoAnimal.CAPIBARA.getOpcion() && (capibara.sizeCosas() > 0)) {
-            this.cont += 1;
+            this.contcapibara += 1;
             return capibara.getCosas();
         } else if (n == TipoAnimal.SERPIENTE.getOpcion() && (serpiente.sizeCosas() > 0)) {
-            this.cont += 1;
+            this.contserpiente += 1;
             return serpiente.getCosas();
         }
         return null;

@@ -1,5 +1,7 @@
 package visual;
 
+import org.example.AreaSaturadaException;
+import org.example.Habitat1;
 import org.example.HabitatIncorrectoException;
 
 import javax.swing.*;
@@ -13,8 +15,10 @@ public class PanelAviario extends JPanel {
     private ImageIcon leon,buho,canguro,capibara,peces,serpiente;
     private ImageIcon fondo;
     private List<Point> posicionesOcupadas = new ArrayList<>();
+    private Habitat1 habitat;
 
-    public PanelAviario() {
+    public PanelAviario(Habitat1 habitat) {
+        this.habitat=habitat;
         fondo = new ImageIcon("src/main/java/visual/Imagenes/panelaviario.jpg");
         this.setPreferredSize(new Dimension(700, 500));
 
@@ -35,7 +39,7 @@ public class PanelAviario extends JPanel {
         agregarLeonButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                agregarImagenAleatoria(leon);
+                    agregarImagenAleatoria(leon);
             }
         });
 
@@ -44,7 +48,17 @@ public class PanelAviario extends JPanel {
         agregarBuhoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                agregarImagenAleatoria(buho);
+                if (habitat != null) {
+                    agregarImagenAleatoria(buho);
+                    try {
+                        habitat.mostrarAnimal(1);
+                    } catch (AreaSaturadaException ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage());
+                        deshabilitarBotonesAgregar();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "No puede ingresar más animales");
+                }
             }
         });
 
@@ -131,4 +145,12 @@ public class PanelAviario extends JPanel {
             g.drawImage(buho.getImage(), posicion.x, posicion.y, this);
         }
     }
+    private void deshabilitarBotonesAgregar() {
+        for (Component component : this.getComponents()) {
+            if (component instanceof JButton) {
+                component.setEnabled(false);
+            }
+        }
+    }
+
 }
