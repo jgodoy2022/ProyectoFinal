@@ -2,7 +2,7 @@ package org.example;
 
 public enum TipoAnimal {
     LEON(1),
-    CARPINCHO(2),
+    CAPIBARA(2),
     CANGURO(3),
     SERPIENTE(4),
     PECES(5),
