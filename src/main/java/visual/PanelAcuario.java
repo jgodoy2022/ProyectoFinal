@@ -9,12 +9,9 @@ import java.awt.event.MouseEvent;
 
 public class PanelAcuario extends JPanel {
     private ImageIcon fondo;
-    private ImageIcon imagenHover;
-    private boolean mouseSobrePanel;
 
     public PanelAcuario() {
-        fondo = new ImageIcon("src/main/java/visual/Imagenes/acuario.jpg");
-        imagenHover = new ImageIcon("src/main/java/visual/Imagenes/panelacuario.jpg");
+        fondo = new ImageIcon("src/main/java/visual/Imagenes/panelacuario.jpg");
         this.setPreferredSize(new Dimension(700, 500));
 
         JButton agregarLeonButton = new JButton("Agregar León");
@@ -76,21 +73,6 @@ public class PanelAcuario extends JPanel {
         this.add(agregarCapibaraButton);
         this.add(agregarPecesButton);
         this.add(agregarSerpienteButton);
-
-        // Agregar un MouseListener para detectar eventos del mouse
-        this.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                mouseSobrePanel = true;
-                repaint(); // Vuelve a pintar el panel para mostrar la imagen de hover
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                mouseSobrePanel = false;
-                repaint(); // Vuelve a pintar el panel para mostrar la imagen original
-            }
-        });
     }
 
     @Override
@@ -98,10 +80,6 @@ public class PanelAcuario extends JPanel {
         super.paintComponent(g);
 
         // Dibuja la imagen según el estado del mouse
-        if (mouseSobrePanel) {
-            g.drawImage(imagenHover.getImage(), 0, 0, getWidth(), getHeight(), this);
-        } else {
             g.drawImage(fondo.getImage(), 0, 0, getWidth(), getHeight(), this);
-        }
     }
 }

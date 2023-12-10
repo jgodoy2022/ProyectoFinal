@@ -6,15 +6,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class PanelSelva extends JPanel {
+    private Image leon, buho, canguro, capibara, peces, serpiente;
     private ImageIcon fondo;
-    private ImageIcon imagenHover;
-    private boolean mouseSobrePanel;
+    private List<Point> posicionesOcupadas = new ArrayList<>();
+
 
     public PanelSelva() {
-        fondo = new ImageIcon("src/main/java/visual/Imagenes/selva.jpg");
-        imagenHover = new ImageIcon("src/main/java/visual/Imagenes/panelselva.jpg");
+        leon= new ImageIcon("src/main/java/visual/Imagenes/leon.jpg").getImage();
+        buho= new ImageIcon("src/main/java/visual/Imagenes/buho.jpg").getImage();
+        canguro= new ImageIcon("src/main/java/visual/Imagenes/canguro.jpg").getImage();
+        capibara= new ImageIcon("src/main/java/visual/Imagenes/capibara.jpg").getImage();
+        peces= new ImageIcon("src/main/java/visual/Imagenes/peces.jpg").getImage();
+        serpiente= new ImageIcon("src/main/java/visual/Imagenes/serpiente.jpg").getImage();
+        fondo = new ImageIcon("src/main/java/visual/Imagenes/panelselva.jpg");
         this.setPreferredSize(new Dimension(700, 500));
 
         JButton agregarLeonButton = new JButton("Agregar León");
@@ -29,29 +38,34 @@ public class PanelSelva extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 // Lógica para agregar un León al panel Selva
                 System.out.println("León agregado a la Selva");
+                agregarImagenAleatoria(leon);
             }
         });
 
         agregarBuhoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Lógica para agregar un Mono al panel Selva
-                System.out.println("Buho agregado a la Selva");
+                // Lógica para agregar un Búho al panel Selva
+                System.out.println("Búho agregado a la Selva");
+                agregarImagenAleatoria(buho);
             }
         });
 
         agregarCanguroButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Lógica para agregar un Tigre al panel Selva
+                // Lógica para agregar un Canguro al panel Selva
                 System.out.println("Canguro agregado a la Selva");
+                agregarImagenAleatoria(canguro);
             }
         });
+
         agregarCapibaraButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Lógica para agregar un Tigre al panel Selva
                 System.out.println("Capibara agregado a la Selva");
+                agregarImagenAleatoria(capibara);
             }
         });
         agregarPecesButton.addActionListener(new ActionListener() {
@@ -59,6 +73,7 @@ public class PanelSelva extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 // Lógica para agregar un Tigre al panel Selva
                 System.out.println("Pez agregado a la Selva");
+                agregarImagenAleatoria(peces);
             }
         });
         agregarSerpienteButton.addActionListener(new ActionListener() {
@@ -66,6 +81,7 @@ public class PanelSelva extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 // Lógica para agregar un Tigre al panel Selva
                 System.out.println("Serpiente agregado a la Selva");
+                agregarImagenAleatoria(serpiente);
             }
         });
 
@@ -78,30 +94,46 @@ public class PanelSelva extends JPanel {
         this.add(agregarSerpienteButton);
 
         // Agregar un MouseListener para detectar eventos del mouse
-        this.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                mouseSobrePanel = true;
-                repaint(); // Vuelve a pintar el panel para mostrar la imagen de hover
-            }
+    }
+    private void agregarImagenAleatoria(Image imagen) {
+        // Genera posiciones aleatorias evitando superposiciones
+        int x, y;
+        do {
+            x = (int) (Math.random() * (getWidth() - imagen.getWidth(null)));
+            y = (int) (Math.random() * (getHeight() - imagen.getHeight(null)));
+        } while (seSuperpone(x, y, imagen.getWidth(null), imagen.getHeight(null)));
 
-            @Override
-            public void mouseExited(MouseEvent e) {
-                mouseSobrePanel = false;
-                repaint(); // Vuelve a pintar el panel para mostrar la imagen original
+        // Agrega la posición a la lista de posiciones ocupadas
+        posicionesOcupadas.add(new Point(x, y));
+
+        // Dibuja la imagen en la posición aleatoria
+        repaint();  // Trigger repaint to call paintComponent
+    }
+
+
+    private boolean seSuperpone(int x, int y, int ancho, int alto) {
+        Rectangle nuevaPosicion = new Rectangle(x, y, ancho, alto);
+        for (Point posicion : posicionesOcupadas) {
+            Rectangle posicionOcupada = new Rectangle(posicion.x, posicion.y, ancho, alto);
+            if (nuevaPosicion.intersects(posicionOcupada)) {
+                return true; // Se superpone con una posición ocupada
             }
-        });
+        }
+        return false; // No se superpone con ninguna posición ocupada
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // Dibuja la imagen según el estado del mouse
-        if (mouseSobrePanel) {
-            g.drawImage(imagenHover.getImage(), 0, 0, getWidth(), getHeight(), this);
-        } else {
-            g.drawImage(fondo.getImage(), 0, 0, getWidth(), getHeight(), this);
+        // Dibuja las imágenes según las posiciones ocupadas
+        for (Point posicion : posicionesOcupadas) {
+            g.drawImage(leon, posicion.x, posicion.y, this);
         }
+
+        // Dibuja la imagen de fondo
+       g.drawImage(fondo.getImage(), 0, 0, getWidth(), getHeight(), this);
     }
+
+
 }
