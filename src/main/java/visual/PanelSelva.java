@@ -1,113 +1,110 @@
 package visual;
 
+import org.example.HabitatIncorrectoException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class PanelSelva extends JPanel {
-    private Image leon, buho, canguro, capibara, peces, serpiente;
+    private ImageIcon leon,buho,canguro,capibara,peces,serpiente;
     private ImageIcon fondo;
     private List<Point> posicionesOcupadas = new ArrayList<>();
 
-
     public PanelSelva() {
-        leon= new ImageIcon("src/main/java/visual/Imagenes/leon.jpg").getImage();
-        buho= new ImageIcon("src/main/java/visual/Imagenes/buho.jpg").getImage();
-        canguro= new ImageIcon("src/main/java/visual/Imagenes/canguro.jpg").getImage();
-        capibara= new ImageIcon("src/main/java/visual/Imagenes/capibara.jpg").getImage();
-        peces= new ImageIcon("src/main/java/visual/Imagenes/peces.jpg").getImage();
-        serpiente= new ImageIcon("src/main/java/visual/Imagenes/serpiente.jpg").getImage();
         fondo = new ImageIcon("src/main/java/visual/Imagenes/panelselva.jpg");
         this.setPreferredSize(new Dimension(700, 500));
+
+        leon = new ImageIcon("src/main/java/visual/Imagenes/leon.png");
+        buho = new ImageIcon("src/main/java/visual/Imagenes/buho.png");
+        canguro = new ImageIcon("src/main/java/visual/Imagenes/canguro.png");
+        capibara = new ImageIcon("src/main/java/visual/Imagenes/capibara.png");
+        peces = new ImageIcon("src/main/java/visual/Imagenes/peces.png");
+        serpiente = new ImageIcon("src/main/java/visual/Imagenes/serpiente.png");
 
         JButton agregarLeonButton = new JButton("Agregar León");
         JButton agregarBuhoButton = new JButton("Agregar Buho");
         JButton agregarCanguroButton = new JButton("Agregar Canguro");
         JButton agregarCapibaraButton = new JButton("Agregar Capibara");
-        JButton agregarPecesButton = new JButton("Agregar Pez");
+        JButton agregarPecesButton = new JButton("Agregar Peces");
         JButton agregarSerpienteButton = new JButton("Agregar Serpiente");
 
         agregarLeonButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Lógica para agregar un León al panel Selva
-                System.out.println("León agregado a la Selva");
                 agregarImagenAleatoria(leon);
             }
         });
 
+        this.add(agregarLeonButton);
+
         agregarBuhoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Lógica para agregar un Búho al panel Selva
-                System.out.println("Búho agregado a la Selva");
                 agregarImagenAleatoria(buho);
             }
         });
 
+        this.add(agregarBuhoButton);
         agregarCanguroButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Lógica para agregar un Canguro al panel Selva
-                System.out.println("Canguro agregado a la Selva");
                 agregarImagenAleatoria(canguro);
             }
         });
 
+        this.add(agregarCanguroButton);
         agregarCapibaraButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Lógica para agregar un Tigre al panel Selva
-                System.out.println("Capibara agregado a la Selva");
                 agregarImagenAleatoria(capibara);
             }
         });
+
+        this.add(agregarCapibaraButton);
         agregarPecesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Lógica para agregar un Tigre al panel Selva
-                System.out.println("Pez agregado a la Selva");
                 agregarImagenAleatoria(peces);
             }
         });
+
+        this.add(agregarPecesButton);
         agregarSerpienteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Lógica para agregar un Tigre al panel Selva
-                System.out.println("Serpiente agregado a la Selva");
                 agregarImagenAleatoria(serpiente);
             }
         });
 
-        // Agregar los botones al panel
-        this.add(agregarLeonButton);
-        this.add(agregarBuhoButton);
-        this.add(agregarCanguroButton);
-        this.add(agregarCapibaraButton);
-        this.add(agregarPecesButton);
         this.add(agregarSerpienteButton);
-
-        // Agregar un MouseListener para detectar eventos del mouse
     }
-    private void agregarImagenAleatoria(Image imagen) {
-        // Genera posiciones aleatorias evitando superposiciones
+
+
+    private void agregarImagenAleatoria(ImageIcon imagen) {
         int x, y;
+        int anchoImage = imagen.getIconWidth();
+        int altoImage = imagen.getIconHeight();
+
+        if (imagen != serpiente) {
+            try {
+                throw new HabitatIncorrectoException("¡Solo se permite agregar serpientes al hábitat!");
+            } catch (HabitatIncorrectoException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
         do {
-            x = (int) (Math.random() * (getWidth() - imagen.getWidth(null)));
-            y = (int) (Math.random() * (getHeight() - imagen.getHeight(null)));
-        } while (seSuperpone(x, y, imagen.getWidth(null), imagen.getHeight(null)));
+            x = (int) (Math.random() * (getWidth() - anchoImage));
+            y = (int) (Math.random() * (getHeight() - altoImage));
+        } while (seSuperpone(x, y, anchoImage, altoImage));
 
-        // Agrega la posición a la lista de posiciones ocupadas
         posicionesOcupadas.add(new Point(x, y));
-
-        // Dibuja la imagen en la posición aleatoria
-        repaint();  // Trigger repaint to call paintComponent
+        repaint();
     }
 
 
@@ -116,24 +113,22 @@ public class PanelSelva extends JPanel {
         for (Point posicion : posicionesOcupadas) {
             Rectangle posicionOcupada = new Rectangle(posicion.x, posicion.y, ancho, alto);
             if (nuevaPosicion.intersects(posicionOcupada)) {
-                return true; // Se superpone con una posición ocupada
+                return true;
             }
         }
-        return false; // No se superpone con ninguna posición ocupada
+        return false;
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        // Dibuja la imagen de fondo
+        g.drawImage(fondo.getImage(), 0, 0, getWidth(), getHeight(), this);
+
         // Dibuja las imágenes según las posiciones ocupadas
         for (Point posicion : posicionesOcupadas) {
-            g.drawImage(leon, posicion.x, posicion.y, this);
+            g.drawImage(serpiente.getImage(), posicion.x, posicion.y, this);
         }
-
-        // Dibuja la imagen de fondo
-       g.drawImage(fondo.getImage(), 0, 0, getWidth(), getHeight(), this);
     }
-
-
 }
