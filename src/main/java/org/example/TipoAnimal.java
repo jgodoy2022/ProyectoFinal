@@ -1,4 +1,4 @@
-package org.example.Utilidad;
+package org.example;
 
 public enum TipoAnimal {
     LEON(1),

@@ -1,4 +1,4 @@
-package org.example.Comidas;
+package org.example;
 
 import org.example.Comida;
 
