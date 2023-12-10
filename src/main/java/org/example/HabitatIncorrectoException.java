@@ -1,4 +1,4 @@
-package org.example.Exceptions;
+package org.example;
 
 public class HabitatIncorrectoException extends Exception{
     public HabitatIncorrectoException(String message) {

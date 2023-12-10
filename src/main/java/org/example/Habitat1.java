@@ -1,4 +1,4 @@
-package org.example.Habitats;
+package org.example;
 
 import org.example.*;
 import org.example.Animal;
