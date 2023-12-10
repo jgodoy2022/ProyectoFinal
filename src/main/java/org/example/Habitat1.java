@@ -1,5 +1,11 @@
 package org.example;
 
+import org.example.*;
+import org.example.Animal;
+import org.example.AreaSaturadaException;
+import org.example.Deposito;
+import org.example.Leon;
+
 public abstract class Habitat1 {
     private Deposito<Animal> leon;
     public Habitat1(int num) {
@@ -14,7 +20,7 @@ public abstract class Habitat1 {
         if(n >= 5){
             throw new AreaSaturadaException("Error. Área Saturada");
         }
-        else if(n == TipoAnimal.LEON.getOpcion() && (leon.sizeCosas() > 0)){
+        else if(n == org.example.TipoAnimal.LEON.getOpcion() && (leon.sizeCosas() > 0)){
             return leon.getCosas();
         }
         else{
